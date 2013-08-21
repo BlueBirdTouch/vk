@@ -76,6 +76,10 @@ static NSString *const kVKRedirectUrl = @"https://oauth.vk.com/blank.html";
     return instance;
 }
 
+- (NSUserDefaults*)standardDefaults {
+    return [NSUserDefaults standardUserDefaults];
+}
+
 - (NSError*)requestError {
     NSError* error = [NSError errorWithDomain:@"VK" code:150 userInfo:[NSDictionary dictionaryWithObject:@"request failed" forKey:@"reason"]];
     return error;
@@ -315,6 +319,9 @@ static NSString *const kVKRedirectUrl = @"https://oauth.vk.com/blank.html";
     
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:serverUrl];
     [httpClient setDefaultHeader:@"'Accept'" value:@"application/json"];
+    [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
+    [httpClient setParameterEncoding:AFJSONParameterEncoding];
+    [AFJSONRequestOperation addAcceptableContentTypes:[NSSet setWithObjects:@"text/html",@"text/plain",nil]];
     
     NSData *imageData = UIImageJPEGRepresentation(photo, 0.5);
         
@@ -338,6 +345,9 @@ static NSString *const kVKRedirectUrl = @"https://oauth.vk.com/blank.html";
     
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:serverUrl];
     [httpClient setDefaultHeader:@"'Accept'" value:@"application/json"];
+    [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
+    [httpClient setParameterEncoding:AFJSONParameterEncoding];
+    [AFJSONRequestOperation addAcceptableContentTypes:[NSSet setWithObjects:@"text/html",@"text/plain",nil]];
     
     NSMutableURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST" path:@"" parameters:nil constructingBodyWithBlock: ^(id <AFMultipartFormData>formData) {
         [formData appendPartWithFileData:doc name:@"file" fileName:@"animation.gif" mimeType:@"image/gif"];

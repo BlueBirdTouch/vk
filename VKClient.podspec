@@ -11,5 +11,5 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '5.1'
   s.source_files = '*.{h,m}'
   s.requires_arc = true
-  s.dependency 'AFNetworking', '~> 0.9.1'
+  s.dependency 'AFNetworking', '~> 1.3.1'
 end
